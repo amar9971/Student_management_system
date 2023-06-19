@@ -53,9 +53,14 @@ urlpatterns = [
     path('Hod/session/delete/<str:id>',Hod_views.delete_session, name='delete_session'),
 
     path('Hod/staff/send_notification',Hod_views.staff_send_notification, name='staff_send_notification'),
+    path('Hod/staff/save_notification',Hod_views.save_staff_notification, name='save_staff_notification'),
 
     #staff panel url
     path('staff/home',staff_views.home, name='staff_home'),
+    path('staff/notification',staff_views.notification, name='notification'),
+    path('staff/mark_as_done/<str:status>',staff_views.staff_notification_mark_as_done, name='mark_as_done'),
+    path('staff/apply_leave',staff_views.staff_apply_leave, name='staff_apply_leave'),
+
 
 
 ] + static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)

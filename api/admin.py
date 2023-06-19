@@ -16,4 +16,5 @@ admin.site.register(Subject)
 admin.site.register(Staff_notification)
 
 
+admin.site.register(Staff_leave)
 

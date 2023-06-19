@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from api.models import Course, Session_year, user1, Student, Staff, Subject
+from api.models import Course, Session_year, user1, Student, Staff, Subject, Staff_notification
 from django.contrib import messages
 
 
@@ -456,16 +456,37 @@ def update_session(request):
         session.save()
         messages.success(request,'session are successfully updated !')
 
-    return redirect('view_session')
+        return redirect('view_session')
 
 
 def delete_session(request, id ):
     session = Session_year.objects.get(id=id)
     session.delete()
-    messages.success(request, 'Session year  are successfully deleted !')
-
+    messages.success(request,'Session are successfully deleted ')
     return redirect('view_session')
 
 
+def save_staff_notification(request):
+    if request.method=="POST":
+        staff_id = request.POST.get('staff_id')
+        message = request.POST.get('message')
+
+        staff = Staff.objects.get(admin= staff_id)
+        notification = Staff_notification(
+
+            staff_id = staff,
+            message=message,
+        )
+        notification.save()
+        messages.success(request,'Notification are successfully send')
+    return redirect('staff_send_notification')
+
+
 def staff_send_notification(request):
-    return render(request, 'Hod/send_staff_notification.html')
+    staff = Staff.objects.all()
+
+    context = {
+
+        'staff':staff,
+    }
+    return render(request,'Hod/send_staff_notification.html', context)

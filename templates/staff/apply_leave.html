@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="{% url 'add_course' %} ">
+   {% csrf_token %}
+
+<div class="col-12">
+<h5 class="form-title"><span>Apply for leave</span></h5>
+</div>
+
+{% include 'includes/messages.html' %}
+
+
+<div class="col-12 col-sm-11">
+<div class="form-group">
+<label>Leave Date</label>
+<input type="date" class="form-control" name="leave_date">
+</div>
+</div>
+
+<div class="col-12 col-sm-11">
+<div class="form-group">
+<label>Leave Message</label>
+<textarea class="form-control" name="leave message" style="height: 200px" required></textarea>
+</div>
+</div>
+
+
+<div class="col-12">
+<button type="submit" class="btn btn-primary">Add_Course</button>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

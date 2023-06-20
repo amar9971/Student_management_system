@@ -60,7 +60,7 @@ urlpatterns = [
     path('staff/notification',staff_views.notification, name='notification'),
     path('staff/mark_as_done/<str:status>',staff_views.staff_notification_mark_as_done, name='mark_as_done'),
     path('staff/apply_leave',staff_views.staff_apply_leave, name='staff_apply_leave'),
-
+    path('staff/apply_leave_save',staff_views.staff_apply_leave_save, name='staff_apply_leave_save'),
 
 
 ] + static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)

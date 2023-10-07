@@ -17,4 +17,8 @@ admin.site.register(Staff_notification)
 
 
 admin.site.register(Staff_leave)
+admin.site.register(Staff_Feedback)
 
+admin.site.register(Student_notification)
+
+admin.site.register(Student_Feedback)

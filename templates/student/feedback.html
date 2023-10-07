@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+
 <div class="page-header">
                   <div class="row align-items-center">
                      <div class="col">
-                        <h3 class="page-title">Staff Leave</h3>
+                        <h3 class="page-title">Student Feedback</h3>
                         <ul class="breadcrumb">
                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                           <li class="breadcrumb-item active">Staff Leave</li>
+                           <li class="breadcrumb-item active">Student Feedback</li>
                         </ul>
                      </div>
 
                      <div class="col-auto text-right float-right ml-auto">
-                        <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button"><i class="fas fa-pray"></i> Leave Apply History</button>
+                        <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button"><i class="fas fa-comment"></i> Feedback History</button>
 
                      </div>
                   </div>
@@ -21,33 +23,27 @@
 <div class="col-sm-12">
 <div class="card">
 <div class="card-body">
-<form method="post" action="{% url 'staff_apply_leave_save' %} ">
+<form method="post" action="{% url 'student_feedback_save' %} ">
    {% csrf_token %}
 
 <div class="col-12">
-<h5 class="form-title"><span>Apply for leave</span></h5>
+<h5 class="form-title"><span>Send Feedback</span></h5>
 </div>
 
 {% include 'includes/messages.html' %}
 
 
-<div class="col-12 col-sm-11">
-<div class="form-group">
-<label>Leave Date</label>
-<input type="date" class="form-control" name="leave_date">
-</div>
-</div>
 
 <div class="col-12 col-sm-11">
 <div class="form-group">
-<label>Leave Message</label>
-<textarea class="form-control" name="leave message" style="height: 200px" required></textarea>
+<label>Feedback</label>
+<textarea class="form-control" name="Feedback" style="height: 200px" required></textarea>
 </div>
 </div>
 
 
 <div class="col-12">
-<button type="submit" class="btn btn-primary">Apply Leave</button>
+<button type="submit" class="btn btn-primary">Send Feedback</button>
 </div>
 
 </form>
@@ -64,7 +60,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Apply leave history</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Feedback History</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
         </button>
@@ -79,34 +75,25 @@
                               <table  id="table_id" class="table table-hover table-center mb-0 datatable">
                                  <thead>
                                     <tr>
+                                        <th> ID</th>
+                                       <th>Feedback</th>
 
-                                       <th>Date</th>
+                                       <th>Reply</th>
 
-                                       <th>Message</th>
 
-                                       <th class="text-right">Status</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                 {% for i in staff_leave_history %}
+                                 {% for i in feedback_history %}
                                     <tr>
-                                       <td>{{i.date}}</td>
-                                        <td>{{i.message}}</td>
+                                       <td>{{i.id}}</td>
+                                        <td>{{i.feedback}}</td>
 
-
-
-                                       <td class="text-right">
-                                          <div class="actions">
-
-                                              {% if i.status == 0 %}
-                                                <span class="badge badge-info">Request are pending</span>
-                                              {% elif i.status == 1 %}
-                                                <span class="badge badge-success">Accepted</span>
-                                              {% else %}
-                                                <span class="badge badge-danger">Rejected</span>
-                                              {% endif %}
-                                          </div>
-                                       </td>
+                                        {% if i.feedback_reply == "" %}
+                                        <td><span class="badge badge-danger">No Reply</span></td>
+                                        {% else %}
+                                        <td>{{i.feedback_reply}}</td>
+                                            {% endif %}
                                     </tr>
                                     <tr>
                                   {% endfor %}
@@ -127,3 +114,4 @@
 </div>
 
 {% endblock %}
+

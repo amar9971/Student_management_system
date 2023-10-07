@@ -55,12 +55,31 @@ urlpatterns = [
     path('Hod/staff/send_notification',Hod_views.staff_send_notification, name='staff_send_notification'),
     path('Hod/staff/save_notification',Hod_views.save_staff_notification, name='save_staff_notification'),
 
+    path('Hod/staff/leave_view',Hod_views.staff_leave_view, name='staff_leave_view'),
+    path('Hod/staff/approve_leave/<str:id>',Hod_views.staff_approve_leave, name='staff_approve_leave'),
+    path('Hod/staff/disapprove_leave/<str:id>',Hod_views.staff_disapprove_leave, name='staff_disapprove_leave'),
+    path('Hod/staff/feedback',Hod_views.staff_feedback, name='staff_feedback_reply'),
+    path('Hod/staff/feedback/save',Hod_views.staff_feedback_save, name='staff_feedback_reply_save'),
+    path('Hod/student/send_notification', Hod_views.student_send_notification, name = 'student_send_notification'),
+    path('Hod/student/save_notification', Hod_views.save_student_notification, name = 'save_student_notification'),
+
+
     #staff panel url
     path('staff/home',staff_views.home, name='staff_home'),
     path('staff/notification',staff_views.notification, name='notification'),
     path('staff/mark_as_done/<str:status>',staff_views.staff_notification_mark_as_done, name='mark_as_done'),
     path('staff/apply_leave',staff_views.staff_apply_leave, name='staff_apply_leave'),
     path('staff/apply_leave_save',staff_views.staff_apply_leave_save, name='staff_apply_leave_save'),
+    path('staff/feedback',staff_views.staff_feedback, name='staff_feedback'),
+    path('staff/feedback_save',staff_views.staff_feedback_save, name='staff_feedback_save'),
+
+
+    #student url
+    path('student/home',student_views.home, name='student_home'),
+    path('student/notification',student_views.student_notification, name='student_notification'),
+    path('student/mark_as_done/<str:status>',student_views.student_notification_mark_as_done, name='student_mark_as_done'),
+    path('student/feedback',student_views.student_feedback, name='student_feedback'),
+    path('student/feedback_save',student_views.student_feedback_save, name='student_feedback_save'),
 
 
 ] + static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)

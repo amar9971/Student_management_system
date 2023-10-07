@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from api.models import Course, Session_year, user1, Student, Staff, Subject, Staff_notification
+from api.models import Course, Session_year, user1, Student, Staff, Subject, Staff_notification, Staff_leave, Staff_Feedback, Student_notification
 from django.contrib import messages
 
 
@@ -366,7 +366,7 @@ def view_subject(request):
     }
     return render(request, 'Hod/view_subject.html', context)
 
-
+@login_required(login_url='/')
 def edit_subject(request, id):
     subject = Subject.objects.get(id=id)
     course = Course.objects.all()
@@ -380,7 +380,7 @@ def edit_subject(request, id):
     }
     return render(request, 'Hod/edit_subject.html', context)
 
-
+@login_required(login_url='/')
 def update_subject(request):
     if request.method == "POST":
         subject_id = request.POST.get('subject_id')
@@ -401,7 +401,7 @@ def update_subject(request):
         messages.success(request, 'Subject are successfully updated !')
         return redirect('view_subject')
 
-
+@login_required(login_url='/')
 def delete_subject(request, id):
     subject = Subject.objects.filter(id=id)
     subject.delete()
@@ -409,7 +409,7 @@ def delete_subject(request, id):
 
     return redirect('view_subject')
 
-
+@login_required(login_url='/')
 def add_session(request):
     if request.method == "POST":
         session_year_start = request.POST.get('session_year_start')
@@ -425,7 +425,7 @@ def add_session(request):
 
     return render(request, 'Hod/add_session.html')
 
-
+@login_required(login_url='/')
 def view_session(request):
     session = Session_year.objects.all()
     context = {
@@ -433,7 +433,7 @@ def view_session(request):
     }
     return render(request,'Hod/view_session.html', context)
 
-
+@login_required(login_url='/')
 def edit_session(request, id):
     session = Session_year.objects.filter(id=id)
     context = {
@@ -441,7 +441,7 @@ def edit_session(request, id):
     }
     return render(request,'Hod/edit_session.html', context)
 
-
+@login_required(login_url='/')
 def update_session(request):
     if request.method=="POST":
         session_id = request.POST.get('session_id')
@@ -458,14 +458,14 @@ def update_session(request):
 
         return redirect('view_session')
 
-
+@login_required(login_url='/')
 def delete_session(request, id ):
     session = Session_year.objects.get(id=id)
     session.delete()
     messages.success(request,'Session are successfully deleted ')
     return redirect('view_session')
 
-
+@login_required(login_url='/')
 def save_staff_notification(request):
     if request.method=="POST":
         staff_id = request.POST.get('staff_id')
@@ -481,7 +481,7 @@ def save_staff_notification(request):
         messages.success(request,'Notification are successfully send')
     return redirect('staff_send_notification')
 
-
+@login_required(login_url='/')
 def staff_send_notification(request):
     staff = Staff.objects.all()
 
@@ -490,3 +490,77 @@ def staff_send_notification(request):
         'staff':staff,
     }
     return render(request,'Hod/send_staff_notification.html', context)
+
+@login_required(login_url='/')
+def staff_leave_view(request):
+    staff_leave = Staff_leave.objects.all()
+    context = {
+        'staff_leave' : staff_leave
+    }
+    return render(request,'Hod/staff_leave.html', context)
+
+
+
+@login_required(login_url='/')
+def staff_approve_leave(request,id):
+    leave = Staff_leave.objects.get(id=id)
+    leave.status = 1
+    leave.save()
+    return redirect('staff_leave_view')
+
+
+@login_required(login_url='/')
+def staff_disapprove_leave(request, id):
+    leave = Staff_leave.objects.get(id=id)
+    leave.status = 2
+    leave.save()
+    return redirect('staff_leave_view')
+
+
+def staff_feedback(request):
+    feedback = Staff_Feedback.objects.all()
+    context = {
+        'feedback':feedback,
+
+    }
+
+    return render(request,'Hod/staff_feedback.html', context)
+
+
+def staff_feedback_save(request):
+    if request.method=='POST':
+        feedback_id = request.POST.get('feedback_id')
+        feedback_reply = request.POST.get('feedback_reply')
+
+        feedback = Staff_Feedback.objects.get(id= feedback_id)
+        feedback.feedback_reply= feedback_reply
+        feedback.save()
+
+    return redirect('staff_feedback_reply')
+
+
+def student_send_notification(request):
+    student = Student.objects.all()
+    #notification = Staff_notification.objects.all()
+
+    context = {
+        'student': student,
+        #'notification': notification,
+    }
+    return render(request,'Hod/student_notification.html', context)
+
+
+def save_student_notification(request):
+    if request.method =='POST':
+        message = request.POST.get('message')
+        student_id = request.POST.get('student_id')
+        print(message, student_id)
+
+        student = Student.objects.get(admin=student_id)
+        stud_notification = Student_notification(
+            student_id= student,
+            message= message,
+        )
+        stud_notification.save()
+        messages.success(request, 'Student notification are successfully send')
+        return redirect('student_send_notification')

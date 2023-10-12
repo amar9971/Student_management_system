@@ -138,11 +138,11 @@
         </button>
       </div>
       <div class="modal-body">
-   <form method="post" action="{% url 'save_student_notification' %}">
+   <form method="POST" action="{% url 'save_student_notification' %}">
        {% csrf_token %}
     <div class="form-group">
 
-    <input type="text" class="form-control" name="Message">
+    <input type="text" class="form-control" name="message">
          <input type="text" class="form-control" name="student_id" value="{{i.admin.id}}" hidden>
 
     </div>

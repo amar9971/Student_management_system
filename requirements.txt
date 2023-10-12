@@ -2,7 +2,7 @@ api==0.0.7
 asgiref==3.7.1
 certifi==2023.5.7
 charset-normalizer==3.1.0
-Django==4.2.1
+Django==4.0.0
 django-active-link==0.1.8
 django-activelink==1.0
 gunicorn==21.2.0

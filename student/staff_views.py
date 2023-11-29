@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from api.models import Staff, Staff_notification ,Staff_leave, Staff_Feedback ,Subject, Session_year, Student, Attendance,Attendance_report
+from api.models import Staff, Staff_notification ,Staff_leave, Staff_Feedback ,Subject, Session_year,Student_result, Student, Attendance,Attendance_report
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -206,13 +206,63 @@ def staff_add_result(request):
 
     subject = Subject.objects.filter(staff_id= staff)
     session_year = Session_year.objects.all()
-
+    get_subject= None
+    get_session_year= None
+    student= None
     action = request.GET.get('action')
+    if action is not None:
+        if request.method == 'POST':
+            subject_id = request.POST.get('subject_id')
+            session_year_id= request.POST.get('session_year_id')
+
+            get_subject = Subject.objects.get(id=subject_id)
+            get_session_year=  Session_year.objects.get(id=session_year_id)
+
+            subject= Subject.objects.filter(id=subject_id)
+            for i in subject:
+                student_id= i.course.id
+                student = Student.objects.filter(course_id= student_id)
 
     contaxt = {
 
         'subject':subject,
         'session_year':session_year,
         'action':action,
+        'get_subject':get_subject,
+        'get_session_year':get_session_year,
+        'student':student,
     }
     return render(request,'staff/add_result.html', contaxt)
+
+
+def staff_save_result(request):
+    if request.method=='POST':
+        subject_id = request.POST.get('subject_id')
+        session_year_id= request.POST.get('session_year_id')
+        student_id= request.POST.get('student_id')
+        assignment_mark= request.POST.get('assignment_mark')
+        exam_mark= request.POST.get('exam_mark')
+
+        get_student= Student.objects.get(admin= student_id)
+        get_subject = Subject.objects.get(id=subject_id)
+        #get_session_year_id = Session_year.objects.get(id=session_year_id)
+
+        check_exists = Student_result.objects.filter(subject_id=get_subject,student_id=get_student).exists()
+        if check_exists:
+            result= Student_result.objects.get(subject_id=get_subject,student_id=get_student)
+            request.assignment_mark= assignment_mark
+            result.exam_mark=exam_mark
+            result.save()
+            messages.success(request,'Result are successfully updated')
+            return redirect('staff_add_result')
+        else:
+            result = Student_result(
+                student_id=get_student,
+                subject_id=get_subject,
+                exam_mark=exam_mark,
+                assignment_mark=assignment_mark,
+            )
+            result.save()
+            messages.success(request, 'Result are successfully add')
+
+            return redirect('staff_add_result')

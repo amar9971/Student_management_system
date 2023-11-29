@@ -56,7 +56,7 @@
 </form>
     {% else %}
 
-    <form action=" " method="post" >
+    <form action="{% url 'staff_save_result' %} " method="post" >
     {% csrf_token %}
 <div class="row">
 <div class="col-12">
@@ -66,7 +66,7 @@
 <div class="col-12 col-sm-6">
 <div class="form-group">
 <label>Subject</label>
-  <select class="form-control" name="subject_id" required>
+  <select class="form-control" name="subject_id" >
 
          <option value="{{get_subject.id}}"> {{get_subject}} </option>
 
@@ -75,33 +75,40 @@
 </div>
 <div class="col-12 col-sm-6">
 <div class="form-group">
-<label>Staff</label>
-  <select class="form-control" name="session_year_id" required>
+<label>Session Year</label>
+  <select class="form-control" name="session_year_id">
 
          <option value="{{get_session_year.id}}">{{get_session_year}} </option>
 
  </select>
 </div>
 </div>
+    <div class="col-12 col-sm-12">
+<div class="form-group">
+<label>Student list</label>
+  <select class="form-control" name="student_id">
+      {% for i in student %}
+         <option value="{{i.admin.id}}"> ID {{i.id}} : {{i.admin.first_name}} {{i.admin.last_name}} </option>
+      {% endfor %}
+
+ </select>
+</div>
+</div>
     <div class="col-12 col-sm-6">
 <div class="form-group">
-<label>Attendance Date</label>
-<input type="date" class="form-control" name="attendance_date" required>
+<label>Assignment Mark</label>
+  <input type="number" class="form-control" name="assignment_mark">
 </div>
 </div>
-
-    {% for i in students %}
-    <div class="col-12  mt-4 ">
+    <div class="col-12 col-sm-6">
 <div class="form-group">
-
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" value="{{i.id}}" name="students_id">
-    <label class="form-check-label" for="exampleCheck1">{{i.admin.first_name}} {{i.admin.last_name}}</label>
-  </div>
-
+<label>Exam</label>
+  <input type="number" class="form-control" name="exam_mark">
 </div>
-    {% endfor %}
+</div>
+
 <div class="col-12">
-<button type="submit" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn btn-primary">Add result</button>
 </div>
 </div>
 </form>
@@ -111,5 +118,4 @@
 </div>
 </div>
 </div>
-
 {% endblock %}

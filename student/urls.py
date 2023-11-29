@@ -82,6 +82,7 @@ urlpatterns = [
     path('staff/save_attendance',staff_views.staff_save_attendance, name='staff_save_attendance'),
     path('staff/view_attendance',staff_views.staff_view_attendance, name='staff_view_attendance'),
     path('staff/add/result',staff_views.staff_add_result, name='staff_add_result'),
+    path('staff/save/result',staff_views.staff_save_result, name='staff_save_result'),
 
 
     #student url

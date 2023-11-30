@@ -94,6 +94,7 @@ urlpatterns = [
     path('student/apply_for_leave',student_views.apply_for_leave, name='student_apply_for_leave'),
     path('student/leave_save',student_views.student_leave_save, name='student_leave_save'),
     path('student/view_attendance',student_views.student_view_attendance, name='student_view_attendance'),
+    path('student/view_result',student_views.student_view_result, name='student_view_result'),
 
 
 ] + static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from api.models import Student_notification, Student, Student_Feedback, Student_leave, Subject, Attendance_report, \
-    Attendance
+    Attendance, Student_result
 from django.contrib import messages
 
 
@@ -95,3 +95,20 @@ def student_view_attendance(request):
     }
 
     return render(request, 'student/student_view_attendance.html', context)
+
+
+def student_view_result(request):
+    mark = None
+    student = Student.objects.get(admin=request.user.id)
+    result = Student_result.objects.filter(student_id=student)
+    for i in result:
+        assignment_mark = i.assignment_mark
+        exam_mark = i.exam_mark
+
+        mark = assignment_mark + exam_mark
+    context = {
+        'result': result,
+        'mark':mark,
+
+    }
+    return render(request, 'student/student_view_result.html', context)

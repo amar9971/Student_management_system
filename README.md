@@ -2,11 +2,12 @@
 <p>
   
   ![c1](https://github.com/amar9971/Student_management_system/assets/43489064/1fbdee3a-b22c-4787-a997-ba3bb4b134ba)
-
+</p>
 <br>
+<p>
 
-<br>
   ![c2](https://github.com/amar9971/Student_management_system/assets/43489064/b2095f7d-a0ab-4704-afa7-c61583e57a4e)
+  </p>
 <br>
 ![c3](https://github.com/amar9971/Student_management_system/assets/43489064/8a6e43e2-e2cc-4add-8d80-d1d26e929070)
 <br>

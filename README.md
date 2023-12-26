@@ -9,10 +9,11 @@
   ![c2](https://github.com/amar9971/Student_management_system/assets/43489064/b2095f7d-a0ab-4704-afa7-c61583e57a4e)
   </p>
 <br>
-<p>
-![c3](https://github.com/amar9971/Student_management_system/assets/43489064/8a6e43e2-e2cc-4add-8d80-d1d26e929070)
+<br>
+
+  ![c3](https://github.com/amar9971/Student_management_system/assets/43489064/8a6e43e2-e2cc-4add-8d80-d1d26e929070)
 </p>
-  <br>
+<br>
   <p>
 ![c4](https://github.com/amar9971/Student_management_system/assets/43489064/6bb47b0a-02f1-4381-a3a1-b68394d8ba0b)
   </p>
